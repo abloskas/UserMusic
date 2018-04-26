@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DojoMusicClub</title>
+</head>
+<body>
+    <h1><%=@user.first_name%> <%=@user.last_name%>'s Playlist:</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Artist</th>
+                <th>Title</th>
+                <th>Times Added</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <%@user.adds.uniq.each do |x|%>
+           <td><%=x.artist%></td>
+           <td><%=x.title%></td>
+           <td><%=x.playlists.where(user:@user).count%></td>
+            </tr>
+            <%end%>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DojoMusicHubt</title>
+    <style>
+        .table table{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="welcome">Hi, <%=current_user.first_name%>!</h1>
+        <a href="/logout">Logout!</a>
+    </div>
+    <div class="wrapper">
+        <h2>Others who added <%=@song.artist%> - <%=@song.title%>:</h2>
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Times Added</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <% @song.song_list.uniq.each do |s| %>
+                    <tr>
+                   <td><a href="/users/<%=s.id%>"><%= s.first_name%> <%= s.last_name%></a></td>
+                   <td><%= s.playlists.where(song: @song).count %></td>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

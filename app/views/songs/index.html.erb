@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DojoMusicHub</title>
+    <style>
+         .header h1{
+            display:inline-block;
+        }
+        .header a {
+            margin-left: 25px;
+            display: inline-block;
+        }
+        .wrapper{
+            width: 970px;
+            margin: 0 auto;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .playlists table{
+            border: 1px solid black;
+        }
+        .add_song input, .add_song p {
+            display: block;
+            margin-left: 20px;
+        }
+        .btn {
+            margin-top: 15px;
+            border: 2px solid black;
+            background-color: white;
+            color: black;
+            padding: 5px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .success {
+            border-color: #4CAF50;
+            color: green;
+        }
+        .success:hover {
+             background-color: #4CAF50;
+            color: white;
+        }
+       
+    
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="welcome">Hi, <%=current_user.first_name%>!</h1>
+        <a href="/logout">Logout!</a>
+    </div>
+    <div class="wrapper">
+        <h2>All the songs in our hub:</h2>
+        <div class="playlists">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Artist</th>
+                        <th>Title</th>
+                        <th>No of times song has been added</th>
+                        <th>Add to Playlist</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @songs.each do |song|%>
+                    <tr>
+                        <td><%= song.artist %></td>
+                        <td><a href="/songs/<%=song.id%>"><%= song.title %></a></td>
+                        <td><%=song.song_list.count%></td>
+                        <td><button><a href="/songs/<%=song.id%>/add" data-method="patch">Add</a></button></td>
+                    </tr>
+                    <%end%>
+                </tbody>
+            </table>
+        </div>
+        <div class="add_song">
+                <h4>Add a song:</h4>
+                <form action="/songs/create" method="POST">
+                    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">
+                    <p>Title: </p><input type="text" name="title">
+                    <p>Artist: </p><input type="text" name="artist">
+                  <input class="btn success" type="submit" value="Create">
+                </form>
+            </div>
+    </div>
+    
+</body>
+</html>
